@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Check if a Python file argument is provided
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <full_path_to_python_file>"
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <full_path_to_python_file> [log_file_path] "
     exit 1
 fi
 
@@ -15,8 +15,12 @@ base_name=$(basename "$python_file" .py)
 # Define the email address
 email_address="p.khanal@utwente.nl"
 
-# Define the location of the log file based on the Python file name
-log_file="/home/khanalp/logs/${base_name}.log"
+# If second argument is provided, use it as a log file.
+if  [ -n "$2" ]; then
+	log_file="$2"
+else
+	log_file="/home/khanalp/logs/${base_name}.log"
+fi
 
 # Change working directory to the directory of the Python file
 cd "$(dirname "$python_file")"
